@@ -48,7 +48,7 @@
               <tr v-for="item in products" :key="item.id">
                 <td>
                   <img
-                    style="object-fit: cover; width: 150px; height: 150px"
+                    style="object-fit: cover; width: 100px; height: 100px"
                     :src="item.imageUrl"
                     referrerpolicy="no-referrer"
                   />
@@ -178,6 +178,10 @@
               </tr>
             </tfoot>
           </table>
+          <div class="input-group w-50 ms-auto">
+            <input type="text" class="form-control" >
+            <button class="btn btn-secondary input-group-text">套用優惠碼</button>
+          </div>
         </div>
         <div class="my-5 row justify-content-center">
           <h2 class="text-center">我的訂單</h2>
