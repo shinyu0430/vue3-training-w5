@@ -193,7 +193,8 @@ const app = Vue.createApp({
         .then((res) => {
             this.showAlert(res.data.message)
             this.$refs.form.resetForm();
-            formData.message = '';
+            this.formData.message = '';
+            this.coupon = '';
             this.getCart();
         })
         .catch((err) => {
