@@ -36,6 +36,7 @@ const app = Vue.createApp({
         message: "",
       },
       cart: {},
+      coupon:''
     };
   },
   components: {
@@ -50,8 +51,8 @@ const app = Vue.createApp({
       const url = `${apiUrl}/api/${apiPath}/products`;
       axios
         .get(url)
-        .then((response) => {
-            this.products = response.data.products.filter((item) => {
+        .then((res) => {
+            this.products = res.data.products.filter((item) => {
               return item.is_enabled;
             });
         })
@@ -65,9 +66,9 @@ const app = Vue.createApp({
       this.tempId = id;
       axios
         .get(url)
-        .then((response) => {
+        .then((res) => {
             this.tempId = "";
-            this.product = response.data.product;
+            this.product = res.data.product;
             this.$refs.productModal.openModal();
         })
         .catch((err) => {
@@ -87,8 +88,8 @@ const app = Vue.createApp({
       };
       axios
         .post(url, product)
-        .then((response) => {
-            this.showAlert(response.data.message)
+        .then((res) => {
+            this.showAlert(res.data.message)
             this.tempId = "";
             this.getCart(); // 更新商品購物車資訊
         })
@@ -102,8 +103,8 @@ const app = Vue.createApp({
       const url = `${apiUrl}/api/${apiPath}/cart`;
       axios
         .get(url)
-        .then((response) => {
-            this.cart = response.data.data;
+        .then((res) => {
+            this.cart = res.data.data;
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -115,8 +116,8 @@ const app = Vue.createApp({
       const url = `${apiUrl}/api/${apiPath}/carts`;
       axios
         .delete(url)
-        .then((response) => {
-            this.showAlert(response.data.message)
+        .then((res) => {
+            this.showAlert(res.data.message)
             this.getCart();
         })
         .catch((err) => {
@@ -130,8 +131,8 @@ const app = Vue.createApp({
       this.tempId = id;
       axios
         .delete(url)
-        .then((response) => {
-            this.showAlert(response.data.message)
+        .then((res) => {
+            this.showAlert(res.data.message)
             this.tempId = "";
             this.getCart();
         })
@@ -155,8 +156,8 @@ const app = Vue.createApp({
       };
       axios
         .put(url, cart)
-        .then((response) => {
-            this.showAlert(response.data.message)
+        .then((res) => {
+            this.showAlert(res.data.message)
             this.tempId = "";
             this.getCart();
         })
@@ -165,15 +166,32 @@ const app = Vue.createApp({
           this.tempId = "";
         });
     },
-
+    // 新增折扣碼
+    addCoupon() {
+      const url = `${apiUrl}/api/${apiPath}/coupon`;
+      const coupon = {
+         data: {
+           code: this.coupon
+          } 
+      };
+      axios
+        .post(url, coupon)
+        .then((res) => {
+          this.showAlert(res.data.message);
+          this.getCart();
+        })
+        .catch((err) => {
+          this.showAlert(err.data.message,false)
+        });
+    },
     // 送出訂單
     createOrder() {
       const url = `${apiUrl}/api/${apiPath}/order`;
       const order = { data: this.formData };
       axios
         .post(url, order)
-        .then((response) => {
-            this.showAlert(response.data.message)
+        .then((res) => {
+            this.showAlert(res.data.message)
             this.$refs.form.resetForm();
             formData.message = '';
             this.getCart();
