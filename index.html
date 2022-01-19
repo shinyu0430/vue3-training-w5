@@ -174,7 +174,7 @@
                 <td colspan="4" class="text-end">折扣</td>
                 <td class="text-end">{{ cart.final_total-cart.total }}</td>
               </tr>
-              <tr class="text-danger">
+              <tr class="text-danger" v-if="cart.final_total !== cart.total">
                 <td colspan="4" class="text-end">折扣價</td>
                 <td class="text-end">＄{{ cart.final_total }}</td>
               </tr>
