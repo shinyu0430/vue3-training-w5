@@ -106,13 +106,14 @@
               清空購物車
             </button>
           </div>
-          <table class="table align-middle">
+          <table class="table">
             <thead>
               <tr>
                 <th></th>
                 <th>品名</th>
-                <th style="width: 150px">數量/單位</th>
+                <th>數量/單位</th>
                 <th>單價</th>
+                <th>總金額</th>
               </tr>
             </thead>
             <tbody>
@@ -135,7 +136,7 @@
                   <td>
                     {{ item.product.title }}
                     <div class="text-success" v-if="item.coupon">
-                      已套用優惠券
+                      已套用優惠券：{{item.coupon.code}}
                     </div>
                   </td>
                   <td>
@@ -155,30 +156,32 @@
                       </div>
                     </div>
                   </td>
-                  <td class="text-end">
-                    <small
-                      v-if="cart.final_total !== cart.total"
-                      class="text-success"
-                      >折扣價：</small
-                    >
-                    {{ item.final_total }}
+                  <td>
+                    {{ item.product.price }}
+                  </td>
+                  <td>
+                    {{ item.total }}
                   </td>
                 </tr>
               </template>
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="3" class="text-end">總計</td>
-                <td class="text-end">{{ cart.total }}</td>
+                <td colspan="4" class="text-end">總計</td>
+                <td class="text-end">＄{{ cart.total }}</td>
               </tr>
               <tr v-if="cart.final_total !== cart.total">
-                <td colspan="3" class="text-end text-success">折扣價</td>
-                <td class="text-end text-success">{{ cart.final_total }}</td>
+                <td colspan="4" class="text-end">折扣</td>
+                <td class="text-end">{{ cart.final_total-cart.total }}</td>
+              </tr>
+              <tr class="text-danger">
+                <td colspan="4" class="text-end">折扣價</td>
+                <td class="text-end">＄{{ cart.final_total }}</td>
               </tr>
             </tfoot>
           </table>
           <div class="input-group w-50 ms-auto">
-            <input v-model="coupon" type="text" class="form-control" >
+            <input v-model="coupon" type="text" class="form-control">
             <button @click="addCoupon" class="btn btn-secondary input-group-text" :disabled="!coupon">套用優惠碼</button>
           </div>
         </div>

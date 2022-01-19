@@ -205,6 +205,7 @@ const app = Vue.createApp({
       const phoneNumber = /^(09)[0-9]{8}$/
       return phoneNumber.test(value) ? true : '需重新確認電話號碼，如：0912345678'
     },
+    // 顯示提示視窗
     showAlert(message,success=true){
       Swal.fire({
         width:300,
