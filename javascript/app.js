@@ -51,13 +51,9 @@ const app = Vue.createApp({
       axios
         .get(url)
         .then((response) => {
-          if (response.data.success) {
             this.products = response.data.products.filter((item) => {
               return item.is_enabled;
             });
-          } else {
-            this.showAlert(response.data.message,false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -70,13 +66,9 @@ const app = Vue.createApp({
       axios
         .get(url)
         .then((response) => {
-          if (response.data.success) {
             this.tempId = "";
             this.product = response.data.product;
             this.$refs.productModal.openModal();
-          } else {
-            this.showAlert(response.data.message,false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -96,13 +88,9 @@ const app = Vue.createApp({
       axios
         .post(url, product)
         .then((response) => {
-          if (response.data.success) {
             this.showAlert(response.data.message)
             this.tempId = "";
             this.getCart(); // 更新商品購物車資訊
-          } else {
-            this.showAlert(response.data.message,false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -115,11 +103,7 @@ const app = Vue.createApp({
       axios
         .get(url)
         .then((response) => {
-          if (response.data.success) {
             this.cart = response.data.data;
-          } else {
-            this.showAlert(response.data.message,false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -132,12 +116,8 @@ const app = Vue.createApp({
       axios
         .delete(url)
         .then((response) => {
-          if (response.data.success) {
             this.showAlert(response.data.message)
             this.getCart();
-          } else {
-            this.showAlert(response.data.message,false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -151,13 +131,9 @@ const app = Vue.createApp({
       axios
         .delete(url)
         .then((response) => {
-          if (response.data.success) {
             this.showAlert(response.data.message)
             this.tempId = "";
             this.getCart();
-          } else {
-            this.showAlert(response.data.message.false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
@@ -180,17 +156,13 @@ const app = Vue.createApp({
       axios
         .put(url, cart)
         .then((response) => {
-          if (response.data.success) {
             this.showAlert(response.data.message)
             this.tempId = "";
             this.getCart();
-          } else {
-            this.showAlert(response.data.message,false)
-            this.tempId = "";
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)
+          this.tempId = "";
         });
     },
 
@@ -201,13 +173,10 @@ const app = Vue.createApp({
       axios
         .post(url, order)
         .then((response) => {
-          if (response.data.success) {
             this.showAlert(response.data.message)
             this.$refs.form.resetForm();
+            formData.message = '';
             this.getCart();
-          } else {
-            this.showAlert(response.data.message,false)
-          }
         })
         .catch((err) => {
           this.showAlert(err.data.message,false)

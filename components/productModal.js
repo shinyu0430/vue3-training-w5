@@ -12,15 +12,14 @@ export default {
        <div class="modal-body">
          <div class="row">
            <div class="col-sm-6">
-             <img class="img-fluid" :src="product.imagesUrl" alt="" referrerpolicy="no-referrer">
+             <img class="img-fluid" :src="product.imageUrl" alt="主圖" referrerpolicy="no-referrer">
            </div>
            <div class="col-sm-6">
              <span class="badge bg-danger rounded-pill">{{ product.category }}</span>
              <p>商品描述：{{ product.description }}</p>
              <p>商品內容：{{ product.content }}</p>
-             <div class="h5" v-if="!product.price">{{ product.origin_price }} 元</div>
-             <del class="h6" v-if="product.price">$ {{ product.origin_price }} 元</del>
-             <span class="h5" v-if="product.price">$ {{ product.price }} 元</span>
+             <del class="h6">$ {{ product.origin_price }} 元</del>
+             <span class="h5">$ {{ product.price }} 元</span>
              <div>
                <div class="input-group">
                  <input type="number" class="form-control"
